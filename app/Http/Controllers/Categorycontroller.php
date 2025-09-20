@@ -125,8 +125,17 @@ class Categorycontroller extends Controller
     {
         $categories = tbl__category::all();
 
-        return response()->json([
-            'categories' => $categories,
-        ], 200);
+
+                return response()->json($categories);
+
+        // return response()->json([
+        //     'categories' => $categories,
+        // ], 200);
+
     }
+//     public function apiIndex(): JsonResponse
+// {
+//     $products = tbl_product::all();
+//     return response()->json($products);
+// }
 }

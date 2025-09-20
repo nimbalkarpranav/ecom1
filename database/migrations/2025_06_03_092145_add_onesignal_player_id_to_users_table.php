@@ -8,25 +8,21 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::table('tbl_order_master', function (Blueprint $table) {
-            $table->string('order_m_customer_id')->default('0')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('onesignal_player_id')->nullable()->after('remember_token');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::table('tbl_order_master', function (Blueprint $table) {
-            $table->string('order_m_customer_id')->change(); // remove default
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('onesignal_player_id');
         });
     }
 };

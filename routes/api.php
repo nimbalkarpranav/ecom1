@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ Route::delete('/products/{id}', [productcontroller::class, 'apiDestroy']);
 
 ////////////////////////LoGIN
 Route::post('/login', [LoginController::class, 'apiLogin']);
+Route::get('/showuser', [LoginController::class, 'apiUser']);
+
 Route::post('/register', [ RegisterController::class, 'apiRegister']);
 Route::post('/logout', [LoginController::class, 'apiLogout'])->middleware('auth:sanctum');
 
@@ -45,4 +48,105 @@ Route::post('/checkout', [OrderController::class, 'checkoutFromApi']);
 
 
 Route::get('/sliders', [HomeController::class, 'index1']);
-Route::post('/sliders', [HomeController::class, 'store']);
+//Route::post('/sliders', [HomeController::class, 'store']);
+use App\Http\Controllers\Offerscontroller;
+
+Route::post('/offers/add', [Offerscontroller::class, 'apiAddOffer']);
+
+ Route::middleware('auth:sanctum')->get('/flutter-notifications', [OrderController::class, 'getFlutterNotifications']);
+use App\Models\FlutterNotification;
+
+
+// Route::get('/flutter-notifications', function (Request $request) {
+//     $userId = $request->query('user_id');
+//     $data = FlutterNotification::where('user_id', $userId)->latest()->get();
+
+//     return response()->json([
+//         'status' => true,
+//         'data' => $data
+//     ]);
+// });
+
+// Route::get('/flutter-notifications', function (Request $request) {
+//     $userId = $request->query('user_id');
+
+//     $data = FlutterNotification::where('user_id', $userId)
+//                 ->orderBy('created_at', 'desc')
+//                 ->get();
+
+//     return response()->json([
+//         'status' => true,
+//         'data' => $data
+//     ]);
+// });
+use App\Models\Order;
+
+// Route::get('/orders', function (Request $request) {
+//     $userId = $request->query('user_id');
+
+//     $orders = Order::where('user_id', $userId)
+//         ->where('order_status', 'confirmed')
+//         ->latest()
+//         ->get(['id', 'order_status', 'created_at']);
+
+//     $notifications = $orders->map(function ($order) {
+//         return [
+//             'title' => 'Order Confirmed ✅',
+//             'message' => "Your order #{$order->id} has been confirmed.",
+//             'timestamp' => $order->created_at->toDateTimeString()
+//         ];
+//     });
+
+//     return response()->json([
+//         'status' => true,
+//         'notifications' => $notifications
+//     ]);
+// });
+// // Route::middleware('auth:sanctum')->get('/flutter-notifications', [OrderController::class, 'getFlutterNotifications']);
+//  use App\Http\Controllers\NotificationController;
+
+// // Route::get('/flutter-notifications', [NotificationController::class, 'getFlutterNotifications']);
+// Route::get('/flutter-notifications', [NotificationController::class, 'index']);
+
+
+
+// Keep other unrelated routes (e.g., orders API)
+Route::get('/orders', function (Request $request) {
+    $userId = $request->query('user_id');
+
+    $orders = Order::where('user_id', $userId)
+        ->where('order_status', 'confirmed')
+        ->latest()
+        ->get(['id', 'order_status', 'created_at']);
+
+    $notifications = $orders->map(function ($order) {
+        return [
+            'title' => 'Order Confirmed ✅',
+            'message' => "Your order #{$order->id} has been confirmed.",
+            'timestamp' => $order->created_at->toDateTimeString()
+        ];
+    });
+
+    return response()->json([
+        'status' => true,
+        'notifications' => $notifications
+    ]);
+});
+
+
+
+// websocket
+Route::get('/websocket', [MessageController::class, 'sendToAll']);
+Route::post('/websocket', [MessageController::class, 'sendToAll']);
+//Route::post('/websocket1', [OrderController::class, 'confirmOrder']);
+
+
+
+
+
+
+Route::get('/user-notifications', [OrderController::class, 'getUserNotifications']);
+Route::post('/orders/{id}/approve', [OrderController::class, 'approveOrder']);
+use App\Http\Controllers\OneSignalController;
+
+Route::middleware('auth:sanctum')->post('/store-player-id', [OneSignalController::class, 'storePlayerId']);

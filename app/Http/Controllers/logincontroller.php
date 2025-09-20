@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 //use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Http\JsonResponse;
+
 
 
 class LoginController extends Controller
@@ -79,4 +81,6 @@ public function apiLogout(Request $request)
     $request->user()->tokens()->delete();
     return response()->json(['message' => 'Logged out successfully']);
 }
+
 }
+

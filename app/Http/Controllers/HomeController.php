@@ -47,9 +47,8 @@ public function index1()
 {
     $sliders = Slider::all();
 
-    return response()->json([
-        'sliders' => $sliders
-    ]);
+    return response()->json($sliders);
+
 }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Admin\MessageController1;
 use App\Http\Controllers\Categorycontroller;
 use App\Http\Controllers\ChildOrderController;
 use App\Http\Controllers\Contactcontroller;
@@ -132,3 +134,21 @@ Route::get('/admin/orders', [OrderController::class, 'showOrders'])->name('admin
 Route::get('/admin/orders/{id}', [OrderController::class, 'showOrder'])->name('order.show');
 //Route::get('/showOrder',[OrderController::class,'showOrder']);
 Route::get('/admin/child-orders', [ChildOrderController::class, 'index'])->name('child.orders');
+
+
+
+// Route::post('/admin/orders/{id}/confirm', [OrderController::class, 'confirmOrder'])->name('admin.orders.confirm');
+
+Route::post('/admin/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('admin.orders.confirm');
+
+Route::post('/admin/send-msg-all', [MessageController::class, 'sendToAll'])->name('admin.send.msg.all');
+
+
+
+
+ Route::get('/notification', function () {
+    return view('BackEnd.pages.notification.sendmsg');
+});
+Route::post('/admin/order/confirm/{id}', [OrderController::class, 'confirmOrder'])->name('admin.order.confirm');
+
+

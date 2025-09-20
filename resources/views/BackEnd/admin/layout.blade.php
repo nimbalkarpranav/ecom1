@@ -76,6 +76,8 @@
               <li class="nav-item"><a href="customerForm"><i class="fas fa-edit"></i><p>Customer Form</p></a></li>
               <li class="nav-item"><a href="CustomerTable"><i class="fas fa-edit"></i><p>Customer Table</p></a></li>
               <li class="nav-item"><a href="admin/orders"><i class="fas fa-edit"></i><p>Order List</p></a></li>
+               <li class="nav-item"><a href="/notification"><i class="fas fa-edit"></i><p>notification</p></a></li>
+
             </ul>
           </div>
         </div>
